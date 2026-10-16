@@ -32,11 +32,29 @@ ng serve
 npm start
 ```
 
-
+Ouvrir **http://localhost:4200** dans le navigateur.
 
 ---
 
+## Structure des composants
 
+```
+src/app/
+├── models/
+│   └── event.model.ts          Interface TypeScript Event
+├── data/
+│   └── events.data.ts          Tableau de 8 événements et liste des catégories
+├── services/
+│   └── favorites.service.ts    Service injectable (providedIn root) gérant les favoris via Signals
+├── components/
+│   ├── header/                 Barre de navigation sticky avec logo, liens et compteur de favoris
+│   └── event-card/             Carte d'un événement (image, titre, date, lieu, prix, bouton favoris)
+└── pages/
+    ├── event-list/             Page /events — liste filtrée avec signal de catégorie
+    ├── event-details/          Page /events/:id — détail complet d'un événement
+    ├── about/                  Page /about — présentation de l'application (lazy loaded)
+    └── not-found/              Page ** — 404 personnalisée
+```
 
 ### Rôle de chaque composant
 

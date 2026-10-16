@@ -1,0 +1,85 @@
+<div class="details-page">
+  @if (event()) {
+    <div class="details-container">
+      <a routerLink="/events" class="back-link">← Retour aux événements</a>
+
+      <div class="details-card">
+        <div class="details-image-wrapper">
+          <img [src]="event()!.imageUrl" [alt]="event()!.title" class="details-image" />
+          <span class="details-category">{{ event()!.category | uppercase }}</span>
+          <div class="details-title-overlay">
+            <h1 class="details-title">{{ event()!.title }}</h1>
+          </div>
+        </div>
+
+        <div class="details-body">
+          <div class="details-meta-grid">
+            <div class="meta-card">
+              <span class="meta-icon">📅</span>
+              <div>
+                <span class="meta-label">Date</span>
+                <span class="meta-value">
+                  {{ event()!.date | date: 'EEEE dd MMMM yyyy' : '' : 'fr' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="meta-card">
+              <span class="meta-icon">📍</span>
+              <div>
+                <span class="meta-label">Lieu</span>
+                <span class="meta-value">{{ event()!.place }}</span>
+              </div>
+            </div>
+
+            <div class="meta-card">
+              <span class="meta-icon">🎟️</span>
+              <div>
+                <span class="meta-label">Tarif</span>
+                @if (event()!.price === 0) {
+                  <span class="meta-value free">Gratuit</span>
+                } @else {
+                  <span class="meta-value price">
+                    {{ event()!.price | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <div class="meta-card">
+              <span class="meta-icon">🏷️</span>
+              <div>
+                <span class="meta-label">Catégorie</span>
+                <span class="meta-value">{{ event()!.category }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="details-description">
+            <h2>À propos de cet événement</h2>
+            <p>{{ event()!.description }}</p>
+          </div>
+
+          <div class="details-actions">
+            <button
+              class="btn btn-favorite"
+              (click)="onToggleFavorite()"
+              [attr.aria-label]="isFavorite() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
+              [attr.aria-pressed]="isFavorite()"
+            >
+              {{ isFavorite() ? '♥ Retirer des favoris' : '♡ Ajouter aux favoris' }}
+            </button>
+            <a routerLink="/events" class="btn btn-back">← Voir tous les événements</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="not-found-inline">
+      <span class="nf-icon">🔎</span>
+      <h2>Événement introuvable</h2>
+      <p>Aucun événement ne correspond à l'identifiant <strong>#{{ id() }}</strong>.</p>
+      <a routerLink="/events" class="btn btn-back">← Retour à la liste</a>
+    </div>
+  }
+</div>

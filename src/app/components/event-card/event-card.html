@@ -1,0 +1,56 @@
+<article class="card" [class.is-favorite]="isFavorite()">
+  <div class="card-image-wrapper">
+    <img
+      [src]="event().imageUrl"
+      [alt]="event().title"
+      class="card-image"
+      loading="lazy"
+    />
+    <span class="card-category">{{ event().category | uppercase }}</span>
+  </div>
+
+  <div class="card-body">
+    <a [routerLink]="['/events', event().id]" class="card-title-link">
+      <h2 class="card-title">{{ event().title }}</h2>
+    </a>
+
+    <div class="card-meta">
+      <span class="meta-item">
+        📅 {{ event().date | date: 'dd MMMM yyyy' : '' : 'fr' }}
+      </span>
+      <span class="meta-item">
+        📍 {{ event().place }}
+      </span>
+      <span class="meta-item meta-price" [class.free]="event().price === 0">
+        @if (event().price === 0) {
+          🎟️ Gratuit
+        } @else {
+          🎟️ {{ event().price | currency: 'EUR' : 'symbol' : '1.0-0' }}
+        }
+      </span>
+    </div>
+
+    <p class="card-description">{{ event().description }}</p>
+
+    <div class="card-actions">
+      <button
+        class="btn btn-details"
+        (click)="onToggleDetails()"
+        aria-label="Voir les détails de l'événement"
+      >
+        🔍 Voir détails
+      </button>
+      @if (showFavorite()) {
+        <button
+          class="btn btn-favorite"
+          (click)="onToggleFavorite()"
+          [attr.aria-label]="isFavorite() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
+          [attr.aria-pressed]="isFavorite()"
+        >
+          <span class="fav-icon">{{ isFavorite() ? '♥' : '♡' }}</span>
+          {{ isFavorite() ? 'Retirer' : 'Favoris' }}
+        </button>
+      }
+    </div>
+  </div>
+</article>
