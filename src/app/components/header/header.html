@@ -1,4 +1,4 @@
-<header class="site-header">
+﻿<header class="site-header">
   <div class="header-inner">
     <a routerLink="/events" class="logo">
       <span class="logo-icon">🔥</span>
@@ -7,13 +7,15 @@
 
     <nav class="nav">
       <a routerLink="/events" routerLinkActive="active"
-         [routerLinkActiveOptions]="{ exact: false }" class="nav-link">
+         [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
         Événements
+      </a>
+      <a routerLink="/events/add" routerLinkActive="active" class="nav-link">
+        Ajouter un événement
       </a>
       <a routerLink="/about" routerLinkActive="active" class="nav-link">
         À propos
       </a>
     </nav>
-
   </div>
 </header>

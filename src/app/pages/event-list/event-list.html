@@ -1,4 +1,4 @@
-<div class="event-list-page">
+﻿<div class="event-list-page">
   <section class="hero">
     <h1 class="hero-title">Découvrez nos <span>événements</span></h1>
     <p class="hero-subtitle">
@@ -6,6 +6,13 @@
       l'activité qui vous correspond.
     </p>
   </section>
+
+  <!-- Counters -->
+  <div class="counters-bar">
+    <span class="counter">📅 Total : <strong>{{ eventCount() }}</strong></span>
+    <span class="counter">❤️ Favoris : <strong>{{ favoriteCount() }}</strong></span>
+    <span class="counter">🆓 Gratuits : <strong>{{ freeEventCount() }}</strong></span>
+  </div>
 
   <div class="filters-bar">
     @for (cat of categories; track cat) {
@@ -27,16 +34,14 @@
         dans la catégorie <strong>{{ selectedCategory() }}</strong>
       }
     </span>
-    @if (favoritesCount() > 0) {
-      <span class="favorites-info">
-        ❤️ {{ favoritesCount() }} favori{{ favoritesCount() !== 1 ? 's' : '' }}
-      </span>
-    }
   </div>
 
   <div class="cards-grid">
     @for (event of filteredEvents(); track event.id) {
-      <app-event-card [event]="event" />
+      <div class="card-wrapper">
+        <app-event-card [event]="event" />
+        <button class="btn-delete" (click)="deleteEvent(event.id)">🗑 Supprimer</button>
+      </div>
     } @empty {
       <div class="empty-state">
         <span class="empty-icon">🔍</span>

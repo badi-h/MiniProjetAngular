@@ -1,32 +1,29 @@
-import { Component, computed, inject, input } from '@angular/core';
+﻿import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe, CurrencyPipe, UpperCasePipe } from '@angular/common';
-import { EVENTS } from '../../data/events.data';
+import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
-import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-event-details',
   imports: [RouterLink, DatePipe, CurrencyPipe, UpperCasePipe],
   templateUrl: './event-details.html',
-  styleUrl: './event-details.css'
+  styleUrl: './event-details.css',
 })
 export class EventDetails {
-  // Receives the :id route param via withComponentInputBinding()
   id = input<string>('');
 
-  event = computed<Event | undefined>(() => {
-    const numId = Number(this.id());
-    return EVENTS.find((e: Event) => e.id === numId);
-  });
+  private eventService = inject(EventService);
 
-  private favoritesService = inject(FavoritesService);
+  event = computed<Event | undefined>(() =>
+    this.eventService.getEventById(Number(this.id()))
+  );
 
   readonly isFavorite = computed(() =>
-    this.favoritesService.isFavorite(Number(this.id()))
+    this.eventService.isFavorite(Number(this.id()))
   );
 
   onToggleFavorite(): void {
-    this.favoritesService.toggle(Number(this.id()));
+    this.eventService.toggleFavorite(Number(this.id()));
   }
 }

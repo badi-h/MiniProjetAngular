@@ -1,33 +1,38 @@
-import { Component, computed, inject, signal } from '@angular/core';
+﻿import { Component, computed, inject, signal } from '@angular/core';
 import { EventCard } from '../../components/event-card/event-card';
-import { EVENTS, CATEGORIES } from '../../data/events.data';
+import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
-import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-event-list',
   imports: [EventCard],
   templateUrl: './event-list.html',
-  styleUrl: './event-list.css'
+  styleUrl: './event-list.css',
 })
 export class EventList {
-  private favoritesService = inject(FavoritesService);
+  private eventService = inject(EventService);
 
-  readonly allEvents = EVENTS;
-  readonly categories = CATEGORIES;
-
+  readonly categories = ['Tous', 'Atelier', 'Conférence', 'Compétition', 'Sport'];
   selectedCategory = signal<string>('Tous');
+
+  readonly allEvents = this.eventService.events;
+  readonly eventCount = this.eventService.eventCount;
+  readonly favoriteCount = this.eventService.favoriteCount;
+  readonly freeEventCount = this.eventService.freeEventCount;
 
   filteredEvents = computed(() => {
     const cat = this.selectedCategory();
-    if (cat === 'Tous') return this.allEvents;
-    return this.allEvents.filter((e: Event) => e.category === cat);
+    if (cat === 'Tous') return this.allEvents();
+    return this.allEvents().filter((e: Event) => e.category === cat);
   });
-
-  // Only needed for the results-info line in the template
-  readonly favoritesCount = this.favoritesService.count;
 
   selectCategory(cat: string): void {
     this.selectedCategory.set(cat);
+  }
+
+  deleteEvent(id: number): void {
+    if (confirm('Supprimer cet événement ?')) {
+      this.eventService.deleteEvent(id);
+    }
   }
 }

@@ -1,1 +1,95 @@
-<p>event-form works!</p>
+﻿<div class="form-page">
+  <h1>Ajouter un événement</h1>
+
+  <form [formGroup]="eventForm" (ngSubmit)="addEvent()" novalidate>
+
+    <!-- Title -->
+    <div class="field">
+      <label for="title">Titre *</label>
+      <input id="title" type="text" formControlName="title" />
+      @if (getControl('title').invalid && getControl('title').touched) {
+        <span class="error">
+          @if (getControl('title').errors?.['required']) { Le titre est obligatoire. }
+          @else if (getControl('title').errors?.['minlength']) { Minimum 5 caractères. }
+          @else if (getControl('title').errors?.['maxlength']) { Maximum 50 caractères. }
+        </span>
+      }
+    </div>
+
+    <!-- Category -->
+    <div class="field">
+      <label for="category">Catégorie *</label>
+      <select id="category" formControlName="category">
+        <option value="">-- Choisir --</option>
+        <option value="Atelier">Atelier</option>
+        <option value="Conférence">Conférence</option>
+        <option value="Sport">Sport</option>
+      </select>
+      @if (getControl('category').invalid && getControl('category').touched) {
+        <span class="error">La catégorie est obligatoire.</span>
+      }
+    </div>
+
+    <!-- Date -->
+    <div class="field">
+      <label for="date">Date *</label>
+      <input id="date" type="date" formControlName="date" />
+      @if (getControl('date').invalid && getControl('date').touched) {
+        <span class="error">La date est obligatoire.</span>
+      }
+    </div>
+
+    <!-- Place -->
+    <div class="field">
+      <label for="place">Lieu *</label>
+      <input id="place" type="text" formControlName="place" />
+      @if (getControl('place').invalid && getControl('place').touched) {
+        <span class="error">
+          @if (getControl('place').errors?.['required']) { Le lieu est obligatoire. }
+          @else if (getControl('place').errors?.['minlength']) { Minimum 3 caractères. }
+        </span>
+      }
+    </div>
+
+    <!-- Price -->
+    <div class="field">
+      <label for="price">Prix (€) *</label>
+      <input id="price" type="number" formControlName="price" min="0" />
+      @if (getControl('price').invalid && getControl('price').touched) {
+        <span class="error">
+          @if (getControl('price').errors?.['required']) { Le prix est obligatoire. }
+          @else if (getControl('price').errors?.['min']) { Le prix doit être ≥ 0. }
+        </span>
+      }
+    </div>
+
+    <!-- Image URL (optional) -->
+    <div class="field">
+      <label for="imageUrl">URL de l'image</label>
+      <input id="imageUrl" type="text" formControlName="imageUrl" />
+    </div>
+
+    <!-- Description -->
+    <div class="field">
+      <label for="description">Description *</label>
+      <textarea id="description" rows="4" formControlName="description"></textarea>
+      @if (getControl('description').invalid && getControl('description').touched) {
+        <span class="error">
+          @if (getControl('description').errors?.['required']) { La description est obligatoire. }
+          @else if (getControl('description').errors?.['minlength']) { Minimum 20 caractères. }
+        </span>
+      }
+    </div>
+
+    <button type="submit" [disabled]="eventForm.invalid" class="btn-submit">
+      Ajouter l'événement
+    </button>
+
+  </form>
+
+  <!-- Debug panel -->
+  <div class="debug-panel">
+    <p><strong>Statut :</strong> {{ formStatus() }}</p>
+    <pre>{{ formValue() }}</pre>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+﻿.form-page {
+  max-width: 640px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.field label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.field input,
+.field select,
+.field textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #7c3aed;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.82rem;
+  margin-top: 0.25rem;
+}
+
+.btn-submit {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: #6d28d9;
+}
+
+.btn-submit:disabled {
+  background: #c4b5fd;
+  cursor: not-allowed;
+}
+
+.debug-panel {
+  margin-top: 2rem;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.82rem;
+}
+
+.debug-panel pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
