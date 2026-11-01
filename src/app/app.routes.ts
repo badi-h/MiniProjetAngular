@@ -1,4 +1,7 @@
+import { form } from '@angular/forms/signals';
 import { Routes } from '@angular/router';
+import{EventForm} from './pages/event-form/event-form';
+
 
 export const routes: Routes = [
   {
@@ -11,6 +14,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/event-list/event-list').then(m => m.EventList)
   },
+{
+    path:'eventform', component: EventForm
+  },
+
   {
     path: 'events/:id',
     loadComponent: () =>
@@ -21,6 +28,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/about/about').then(m => m.About)
   },
+  
+  
   {
     path: '**',
     loadComponent: () =>
